@@ -33,13 +33,18 @@ function fillScene() {
 	// exponent 1
 	// target position 0, 200, 0
 
-	var light = new THREE.DirectionalLight( 0xFFFFFF, 1.5 );
-	light.position.set( -200, 200, -400 );
+	var light = new THREE.SpotLight( 0xFFFFFF, 1.5 );
+	light.position.set( -400, 1200, 300 );
+	light.angle = 20 * Math.PI / 180;
+	light.exponent = 1;
+	var target = new THREE.Object3D();
+	target.position.set(0, 200, 0)
+	light.target = target;
 	scene.add( light );
 
 	var solidGround = new THREE.Mesh(
 		new THREE.PlaneGeometry( 10000, 10000 ),
-		new THREE.MeshPhongMaterial({ color: 0xFFFFFF,
+		new THREE.MeshLambertMaterial({ color: 0xFFFFFF,
 			// polygonOffset moves the plane back from the eye a bit, so that the lines on top of
 			// the grid do not have z-fighting with the grid:
 			// Factor == 1 moves it back relative to the slope (more on-edge means move back farther)

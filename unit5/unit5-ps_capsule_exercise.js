@@ -47,12 +47,29 @@ function createCapsule( material, radius, top, bottom, segmentsWidth, openTop, o
 	makeLengthAngleAxisTransform( cyl, cylAxis, center );
 
 	// YOUR CODE HERE
+	var result = new THREE.Object3D();
+	result.add( cyl );
 	// Here's a sphere's geometry. Use it to cap the cylinder if
 	// openTop and/or openBottom is false. Bonus points: use instancing!
-	var sphGeom = new THREE.SphereGeometry( radius, segmentsWidth, segmentsWidth/2 );
+	if(!openTop||!openBottom){
+		var sphGeom = new THREE.SphereGeometry( radius, segmentsWidth, segmentsWidth/2 );
+		// 复用instance
+		if(!openTop){
+			// 画 top球
+			var topBall = new THREE.Mesh(sphGeom, material);
+			makeLengthAngleAxisTransform(topBall, cylAxis, top)
+			result.add(topBall)
+		}
+		if(!openBottom){
+			// 画 bottom球
+			var bottomBall = new THREE.Mesh(sphGeom, material);
+			makeLengthAngleAxisTransform(bottomBall, cylAxis, bottom)
+			result.add(bottomBall)
+		}
+	}
 
 	// You'll probably want to return something other than this...
-	return cyl;
+	return result;
 
 }
 

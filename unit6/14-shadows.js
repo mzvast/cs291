@@ -26,6 +26,7 @@ function init() {
 
 	// RENDERER
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
+	renderer.shadowMapEnabled = true;
 	renderer.gammaInput = true;
 	renderer.gammaOutput = true;
 	renderer.setSize(canvasWidth, canvasHeight);
@@ -47,7 +48,7 @@ function fillScene() {
 	// LIGHTS
 	scene.add( new THREE.AmbientLight( 0x222222 ) );
 
-	headlight = new THREE.PointLight( 0x606060, 1.0 );
+	headlight = new THREE.PointLight( 0x606060, 2.0 );
 	scene.add( headlight );
 
 	spotlight = new THREE.SpotLight( 0xFFFFFF, 1.0 );
@@ -55,6 +56,7 @@ function fillScene() {
 	spotlight.angle = 20 * Math.PI / 180;
 	spotlight.exponent = 1;
 	spotlight.target.position.set( 0, 200, 0 );
+	spotlight.castShadow = true;
 	scene.add( spotlight );
 
 	var lightSphere = new THREE.Mesh(
@@ -76,6 +78,7 @@ function fillScene() {
 			polygonOffset: true, polygonOffsetFactor: 1.0, polygonOffsetUnits: 4.0
 		}));
 	solidGround.rotation.x = -Math.PI / 2;
+	solidGround.receiveShadow = true;
 
 	scene.add( solidGround );
 

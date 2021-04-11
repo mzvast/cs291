@@ -35,24 +35,33 @@ function createHelix( material, radius, tube, radialSegments, tubularSegments, h
 	var helix = new THREE.Object3D();
 
 	var top = new THREE.Vector3();
-
+	var bottom = new THREE.Vector3();
 	var sine_sign = clockwise ? 1 : -1;
-
+	var openBottom = false;
+	var openTop = false;
 	///////////////
 	// YOUR CODE HERE: remove spheres, use capsules instead, going from point to point.
 	//
-	var sphGeom = new THREE.SphereGeometry( tube, tubularSegments, tubularSegments/2 );
-	for ( var i = 0; i <= arc*radialSegments ; i++ )
+
+	for ( var i = 1; i <= arc*radialSegments ; i++ )
 	{
+		// 下一个是不是到顶了，判断openTop有没有
+		openTop = false//(i+1)>arc*radialSegments?false:true;
+		// 第i个和第i-1个连成的向量
+
 		// going from X to Z axis
 		top.set( radius * Math.cos( i * 2*Math.PI / radialSegments ),
 		height * (i/(arc*radialSegments)) - height/2,
 		sine_sign * radius * Math.sin( i * 2*Math.PI / radialSegments ) );
 
-		var sphere = new THREE.Mesh( sphGeom, material );
-		sphere.position.copy( top );
+		bottom.set( radius * Math.cos( (i-1) * 2*Math.PI / radialSegments ),
+		height * ((i-1)/(arc*radialSegments)) - height/2,
+		sine_sign * radius * Math.sin( (i-1) * 2*Math.PI / radialSegments ) );
+		
+		var capsule = createCapsule(material, tube, top, bottom, tubularSegments, false, false)
+		openBottom = true;
+		helix.add( capsule );
 
-		helix.add( sphere );
 	}
 	///////////////
 
