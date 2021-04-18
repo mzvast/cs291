@@ -137,6 +137,8 @@ function animate() {
 
 function render() {
 	var delta = clock.getDelta();
+	var time = clock.getElapsedTime();
+	// texture[effectController.mtlName].offset.set(0, time);
 	cameraControls.update(delta);
 
 	if ( effectController.reset )
@@ -185,7 +187,11 @@ function render() {
 	// Student:
 	// Transform the texture here to move downwards at
 	// a rate of one copy of the texture per second.
-
+	texture[effectController.mtlName].offset.set(
+		0.2*Math.sin(2*time),
+		time );
+	texture[effectController.mtlName].repeat.set( 
+		effectController.repeat, effectController.repeat/3 );
 	renderer.render(scene, camera);
 }
 
