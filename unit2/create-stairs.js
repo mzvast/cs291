@@ -16,7 +16,7 @@ var gridZ = false;
 var axes = false;
 var ground = true;
 
-function createStairs() {
+function createStairs(offsetY, offsetZ) {
 
 	// MATERIALS
 	var stepMaterialVertical = new THREE.MeshLambertMaterial( {
@@ -47,17 +47,17 @@ function createStairs() {
 	// The position is where the center of the block will be put.
 	// You can define position as THREE.Vector3(x, y, z) or in the following way:
 	stepMesh.position.x = 0;			// centered at origin
-	stepMesh.position.y = verticalStepHeight/2;	// half of height: put it above ground plane
-	stepMesh.position.z = 0;			// centered at origin
+	stepMesh.position.y = offsetY + verticalStepHeight/2;	// half of height: put it above ground plane
+	stepMesh.position.z = offsetZ;			// centered at origin
 	scene.add( stepMesh );
 
 	// Make and position the horizontal part
 	stepMesh = new THREE.Mesh( stepHorizontal, stepMaterialHorizontal );
 	stepMesh.position.x = 0;
 	// Push up by half of horizontal step's height, plus vertical step's height
-	stepMesh.position.y = stepThickness/2 + verticalStepHeight;
+	stepMesh.position.y = offsetY + stepThickness/2 + verticalStepHeight;
 	// Push step forward by half the depth, minus half the vertical step's thickness
-	stepMesh.position.z = horizontalStepDepth/2 - stepHalfThickness;
+	stepMesh.position.z = offsetZ + horizontalStepDepth/2 - stepHalfThickness;
 	scene.add( stepMesh );
 }
 
@@ -146,8 +146,10 @@ function fillScene() {
 		Coordinates.drawAllAxes({axisLength:300,axisRadius:2,axisTess:50});
 	}
 	createCup();
-	var stairs = createStairs();
-	scene.add(stairs);
+	for(let i =0;i<6;i++){
+		var stairs = createStairs(i*(200+50),i*(400-50));
+		scene.add(stairs);
+	}
 }
 //
 
