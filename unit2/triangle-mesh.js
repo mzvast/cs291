@@ -27,6 +27,13 @@ function drawSquare(x1, y1, x2, y2) {
 
 	var square = new THREE.Geometry();
 	// Your code goes here
+	square.vertices.push( new THREE.Vector3(x1,y1,0));
+	square.vertices.push( new THREE.Vector3(x1,y2,0));
+	square.vertices.push( new THREE.Vector3(x2,y1,0));
+	square.vertices.push( new THREE.Vector3(x2,y2,0));
+	
+	square.faces.push( new THREE.Face3( 0,1,2  ));
+	square.faces.push( new THREE.Face3( 3,2,1  ));
 
 	// don't forget to return the geometry!	The following line is required!
 	return square;
@@ -102,5 +109,3 @@ try {
 	var errorReport = "Your program encountered an unrecoverable error, can not draw on canvas. Error was:<br/><br/>";
 	$('#container').append(errorReport+e);
 }
-
-
