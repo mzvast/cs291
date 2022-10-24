@@ -47,15 +47,20 @@ function fillScene() {
 	// or just simply theta = Math.acos( cylAxis.y );
 
 	// YOUR CODE HERE
-	var cylinder = new THREE.Mesh(
-		new THREE.CylinderGeometry( 0.2, 0.2, cylLength, 32 ), cylinderMaterial );
-	var rotationAxis = new THREE.Vector3(1,0,-1);
-	// makeRotationAxis wants its axis normalized
-	rotationAxis.normalize();
-	// don't use position, rotation, scale
-	cylinder.matrixAutoUpdate = false;
-	cylinder.matrix.makeRotationAxis( rotationAxis, theta );
-	scene.add( cylinder );
+	const cylinderGeometry = new THREE.CylinderGeometry( 0.2, 0.2, cylLength, 32 );
+	const rs = [[1,0,1],[1,0,-1],[-1,0,-1],[-1,0,1]]; // 旋转轴
+	// theta是一样的，只需要对4个轴分别转即可
+	for(let i=0;i<4;i++){
+		var cylinder = new THREE.Mesh(
+			cylinderGeometry, cylinderMaterial );
+		var rotationAxis = new THREE.Vector3(...rs[i]);
+		// makeRotationAxis wants its axis normalized
+		rotationAxis.normalize();
+		// don't use position, rotation, scale
+		cylinder.matrixAutoUpdate = false;
+		cylinder.matrix.makeRotationAxis( rotationAxis, theta );
+		scene.add( cylinder );
+	}
 
 }
 
