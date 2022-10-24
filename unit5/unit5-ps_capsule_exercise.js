@@ -51,8 +51,20 @@ function createCapsule( material, radius, top, bottom, segmentsWidth, openTop, o
 	// openTop and/or openBottom is false. Bonus points: use instancing!
 	var sphGeom = new THREE.SphereGeometry( radius, segmentsWidth, segmentsWidth/2 );
 
+	const ans = new THREE.Object3D();
+	ans.add(cyl);
+	if(!openTop){
+		const ball = new THREE.Mesh(sphGeom, material);
+		ball.position = top;
+		ans.add(ball);
+	}
+	if(!openBottom){
+		const ball = new THREE.Mesh(sphGeom, material);
+		ball.position = bottom;
+		ans.add(ball);
+	}
 	// You'll probably want to return something other than this...
-	return cyl;
+	return ans;
 
 }
 
