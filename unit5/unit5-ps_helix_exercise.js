@@ -41,7 +41,10 @@ function createHelix( material, radius, tube, radialSegments, tubularSegments, h
 	///////////////
 	// YOUR CODE HERE: remove spheres, use capsules instead, going from point to point.
 	//
-	var sphGeom = new THREE.SphereGeometry( tube, tubularSegments, tubularSegments/2 );
+	let bottom = new THREE.Vector3();
+	let openTop = true;
+	let openBottom = false;
+	bottom.set(radius, - height/2, 0);
 	for ( var i = 0; i <= arc*radialSegments ; i++ )
 	{
 		// going from X to Z axis
@@ -49,10 +52,11 @@ function createHelix( material, radius, tube, radialSegments, tubularSegments, h
 		height * (i/(arc*radialSegments)) - height/2,
 		sine_sign * radius * Math.sin( i * 2*Math.PI / radialSegments ) );
 
-		var sphere = new THREE.Mesh( sphGeom, material );
-		sphere.position.copy( top );
-
+		var sphere = createCapsule( material, tube, top, bottom, tubularSegments, openTop, openBottom );//new THREE.Mesh( sphGeom, material );
+		openTop = false; // 底部的top开，之后都是关
+		openBottom = true; // 底部的的bottom关，之后都是开
 		helix.add( sphere );
+		bottom.copy(top); // 下一段的bottom跟上一段的top连起来
 	}
 	///////////////
 
