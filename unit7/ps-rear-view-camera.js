@@ -298,6 +298,12 @@ function render() {
 
 	// Student: set rearCam so it's pointing in the opposite direction than the camera
 
+	rearCam.position.copy( camera.position);
+
+	rearTarget.subVectors(camera.position, cameraControls.target);
+	rearTarget.add(camera.position); // 反方向向量
+	rearCam.lookAt(rearTarget); // 反向的一个点
+	
 	// rearview render
 	renderer.enableScissorTest( true );
 	// setScissor could be set just once in this particular case,
