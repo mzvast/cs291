@@ -16,7 +16,9 @@ function fillScene() {
 
 	// LIGHTS
 	scene.add( new THREE.AmbientLight( 0x222222 ) );
-
+	let light = new THREE.DirectionalLight(0xFFFFFF, 1.5);
+	light.position.set(-200, 200, -400);
+	scene.add(light);
 	// Student: add a directional light here,
 	// direction to it is -200, 200, -400
 	// full white color,
