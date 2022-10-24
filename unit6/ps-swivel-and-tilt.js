@@ -256,6 +256,19 @@ function animate() {
 function render() {
 	var delta = clock.getDelta();
 	cameraControls.update(delta);
+
+	const {azimuth, altitude} = effectController;	
+	
+	const alpha  = altitude * Math.PI / 180; // -90~90 deg
+	const theta = azimuth * Math.PI / 180; // 0~360 deg
+
+	const y = Math.sin(alpha);
+	const shad = Math.abs(Math.cos(alpha));
+	const x = shad*Math.cos(theta);
+	const z = shad*Math.sin(theta);
+
+	light.position.set(x,y,z);
+	
 	renderer.render(scene, camera);
 }
 
