@@ -25,9 +25,9 @@ function SquareGeometry() {
 	// Change this array to select the correct part of the texture
 	var uvs = [];
 	uvs.push( new THREE.Vector2( 0.0, 0.0 ) );
-	uvs.push( new THREE.Vector2( 1.0, 0.0 ) );
-	uvs.push( new THREE.Vector2( 1.0, 1.0 ) );
-	uvs.push( new THREE.Vector2( 0.0, 1.0 ) );
+	uvs.push( new THREE.Vector2( 1.0/4, 0.0 ) );
+	uvs.push( new THREE.Vector2( 1.0/4, 1.0/4 ) );
+	uvs.push( new THREE.Vector2( 0.0, 1.0/4 ) );
 
 	// generate faces
 	geo.faces.push( new THREE.Face3( 0, 1, 2 ) );
