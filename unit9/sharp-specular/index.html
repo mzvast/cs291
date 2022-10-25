@@ -12,7 +12,7 @@
 		<script type="text/javascript" src="../../lib/uclass_TeapotGeometry.js"></script>
 		<script type="text/javascript" src="../../lib/stats.min.js"></script>
 		<script type="text/javascript" src="../../lib/dat.gui.min.js"></script>
-		<script type="text/x-glsl" id="vertex">
+		<script type="x-shader/x-vertex" id="vertex">
 varying vec3 vNormal;
 varying vec3 vViewPosition;
 
@@ -24,7 +24,7 @@ void main() {
 	vViewPosition = -mvPosition.xyz;
 }
 		</script>
-		<script type="text/x-glsl" id="fragment">
+		<script type="x-shader/x-fragment" id="fragment">
 uniform vec3 uMaterialColor;
 uniform vec3 uSpecularColor;
 
@@ -71,6 +71,12 @@ void main() {
 	specular *= diffuse*(2.0 + shininess)/8.0;
 	
 	// Student: add test here, when specular < uDropoff, set to 0.0, else to 1.0
+
+	if(specular < uDropoff){
+		specular = 0.;
+	} else{
+		specular = 1.;
+	}
 
 	gl_FragColor.rgb += uDirLightColor * uSpecularColor * uKs * specular;
 }
