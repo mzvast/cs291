@@ -335,6 +335,10 @@ function createDrinkingBird(bbird) {
 
 	// add field for animated part, for simplicity
 	bbird.animated = bodyhead;
+	
+	body.position.y -= pivotHeight;
+	head.position.y -= pivotHeight;
+	bodyhead.position.y = pivotHeight;// 旋转中心上移
 
 	bbird.add(support);
 	bbird.add(bodyhead);
