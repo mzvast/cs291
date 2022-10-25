@@ -185,6 +185,8 @@ function render() {
 	// Student:
 	// Transform the texture here to move downwards at
 	// a rate of one copy of the texture per second.
+	const offsetVal = clock.getElapsedTime(); // Get the seconds passed since the clock started.
+	texture[effectController.mtlName].offset.set(0, offsetVal);
 
 	renderer.render(scene, camera);
 }
