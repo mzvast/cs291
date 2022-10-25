@@ -12,7 +12,7 @@
 		<script type="text/javascript" src="../../lib/uclass_TeapotGeometry.js"></script>
 		<script type="text/javascript" src="../../lib/stats.min.js"></script>
 		<script type="text/javascript" src="../../lib/dat.gui.min.js"></script>
-		<script type="text/x-glsl" id="vertex">
+		<script type="x-shader/x-vertex" id="vertex">
 varying vec3 vNormal;
 varying vec3 vViewPosition;
 
@@ -23,7 +23,7 @@ void main() {
 	vViewPosition = -mvPosition.xyz;
 }
 		</script>
-		<script type="text/x-glsl" id="fragment">
+		<script type="x-shader/x-fragment" id="fragment">
 uniform vec3 uMaterialColor;
 uniform vec3 uSpecularColor;
 
@@ -56,7 +56,7 @@ void main() {
 	// flashlight: is XY point in camera space inside radius?
 	// Student: compare view position to uFlashOffset and see
 	// if distance between the two is inside uFlashRadius
-	if ( length( vViewPosition.xy ) > uFlashRadius ) {
+	if ( length( vViewPosition.xy - uFlashOffset.xy ) > uFlashRadius ) {
 		return;
 	}
 
